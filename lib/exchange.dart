@@ -4,11 +4,7 @@ import 'dart:html';
 class ExchangeService {
   static Map<String, Map<String, double>> _exchanges = {};
 
-  ExchangeService() {
-    _initExchangeMap();
-  }
-
-  Future<Map> _getJSon() async {
+  static Future<Map> _getJSon() async {
       var data = await HttpRequest.getString('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5');
       var json = jsonDecode(data);
       Map<String, double> map = {};
@@ -18,7 +14,7 @@ class ExchangeService {
       return map;
  }
 
-  Future<void> _initExchangeMap() async {
+  static Future<void> initExchangeMap() async {
     var map = await _getJSon();
 
     Map<String, double> mapUSD = {};
@@ -43,7 +39,7 @@ class ExchangeService {
     _exchanges['UAH']!['BTC'] = map['BTC']!*map['USD']!;
   }
 
-  double getExchange(String currencyFrom, String currencyTo, double value) {
+  static double getExchange(String currencyFrom, String currencyTo, double value) {
     if(currencyFrom == currencyTo) {
       return value;
     }

@@ -4,6 +4,7 @@ import 'package:first/exchange.dart';
 
 void main() {
   runApp(const MyApp());
+  ExchangeService.initExchangeMap();
 
 }
 
@@ -33,7 +34,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  ExchangeService exchangeService = ExchangeService();
   final List<String> currency = ['USD', 'EUR', 'BTC', 'UAH'];
   String currencyFrom = '';
   String currencyTo = '';
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getActualExchangeRate() {
     setState(() {
-      exchangeService = ExchangeService();
+      ExchangeService.initExchangeMap();
     });
   }
 
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             FlatButton(onPressed: () {
               setState(() {
-                result = exchangeService.getExchange(currencyFrom, currencyTo, value);
+                result = ExchangeService.getExchange(currencyFrom, currencyTo, value);
               });
             }, child: const Text(
               'Get exchange',
